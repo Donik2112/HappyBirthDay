@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>С Днём Рождения, Таир!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      transition: background 2s ease;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease forwards;
+    }
+    .message {
+      font-size: 1.3em;
+      max-width: 600px;
+      margin: 15px;
+      line-height: 1.6;
+      animation: fadeIn 2.5s ease forwards;
+    }
+    button {
+      margin-top: 20px;
+      padding: 15px 25px;
+      font-size: 1em;
+      background-color: #ffffff;
+      color: #4a00e0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+    button:hover {
+      background-color: #f1f1f1;
+      transform: scale(1.05);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .confetti, .star, .heart {
+      position: absolute;
+      border-radius: 50%;
+      animation: fall linear infinite;
+      opacity: 0.9;
+    }
+
+    .confetti {
+      width: 8px;
+      height: 8px;
+      background-color: hsl(0, 100%, 50%);
+    }
+
+    .star {
+      width: 4px;
+      height: 4px;
+      background-color: white;
+    }
+
+    .heart {
+      width: 12px;
+      height: 12px;
+      background-color: red;
+      transform: rotate(45deg);
+    }
+
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -6px;
+      left: 0;
+    }
+    .heart::after {
+      left: -6px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .final-message {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-top: 30px;
+      color: gold;
+      animation: fadeIn 2s ease;
+    }
+  </style>
+</head>
+<body>
+  <h1>С Днём Рождения, Таир! 🎉</h1>
+  <div class="message" id="message">
+    Желаем тебе радости, вдохновения и весёлого настроения!
+  </div>
+  <button onclick="celebrate()">Нажми для сюрприза ✨</button>
+
+  <audio id="bg-music" src="https://www.bensound.com/bensound-music/bensound-littleidea.mp3"></audio>
+
+  <script>
+    const wishes = [
+      "Ты большой молодец, что записался к нам на курсы!",
+      "Ты отлично справляешься с HTML и CSS!",
+      "У тебя впереди большое будущее в программировании!",
+      "Желаем тебе творческих успехов и крутых проектов!",
+      "Ты нас вдохновляешь своим старанием! Так держать!"
+    ];
+    let wishIndex = 0;
+    let clickCount = 0;
+
+    const gradients = [
+      "linear-gradient(45deg, #ee9ca7, #ffdde1)",
+      "linear-gradient(45deg, #2193b0, #6dd5ed)",
+      "linear-gradient(45deg, #cc2b5e, #753a88)",
+      "linear-gradient(45deg, #42275a, #734b6d)",
+      "linear-gradient(45deg, #56ab2f, #a8e063)"
+    ];
+
+    function celebrate() {
+      const message = document.getElementById('message');
+      message.textContent = wishes[Math.floor(Math.random() * wishes.length)];
+
+      document.body.style.background = gradients[Math.floor(Math.random() * gradients.length)];
+
+      for (let i = 0; i < 25; i++) {
+        createConfetti();
+        createStar();
+        createHeart();
+      }
+
+      clickCount++;
+      if (clickCount === 1) {
+        document.getElementById("bg-music").play();
+      }
+
+      if (clickCount === 5) {
+        const final = document.createElement('div');
+        final.className = 'final-message';
+        final.textContent = "Таир, ты невероятный! Мы гордимся тобой и желаем огромных успехов! 🚀";
+        document.body.appendChild(final);
+      }
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 4000);
+    }
+
+    function createStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 5000);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+  </script>
+</body>
+</html>
